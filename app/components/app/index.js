@@ -1,4 +1,5 @@
 import { capitalize, sortAsc, sortDesc } from './../../utils/utils.js';
+// import { usersMockData } from './../../mocks/users.data.js';
 
 export default function App(config) {
     this.config = config;
@@ -33,7 +34,12 @@ App.prototype.renderTable = async function () {
             });
         });
     }
+    if (document.getElementById("data-table")) {
+        document.getElementById("data-table").remove();
+    }
     this.table = document.createElement("table");
+    this.table.id = "data-table";
+    this.table.classList.add('table');
     this.renderHead();
     this.renderBody();
 
@@ -41,8 +47,6 @@ App.prototype.renderTable = async function () {
 }
 
 App.prototype.renderHead = function () {
-    this.table.id = "data-table";
-    this.table.classList.add('table');
     const thead = document.createElement("thead");
     thead.classList.add("thead-dark");
     this.columnNames.forEach((keyName, i) => {
@@ -286,6 +290,8 @@ App.prototype.renderPopup = function () {
         };
         payload.description = "";
         this.data.push(payload);
+        this.renderTable();
+        this.renderPagination();
         popupWrap.remove();
     });
     const header = document.createElement("h3");
