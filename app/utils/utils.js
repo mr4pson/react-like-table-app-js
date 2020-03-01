@@ -1,4 +1,4 @@
-function sortAsc(keyName, a, b) {
+export function sortAsc(keyName, a, b) {
     if (a[keyName] > b[keyName]) {
       return 1;
     }
@@ -7,7 +7,7 @@ function sortAsc(keyName, a, b) {
     }
     return 0;
 }
-function sortDesc(keyName, a, b) {
+export function sortDesc(keyName, a, b) {
     if (a[keyName] < b[keyName]) {
       return 1;
     }
@@ -16,6 +16,6 @@ function sortDesc(keyName, a, b) {
     }
     return 0;
 }
-function capitalize(phrase) {
+export function capitalize(phrase) {
   return phrase.charAt(0).toUpperCase() + phrase.slice(1);
 }

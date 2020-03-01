@@ -3,3 +3,5 @@ const config = {
     pageRowLimit: 12,
     columnSize: 5
 };
+
+export default config;

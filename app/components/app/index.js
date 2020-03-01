@@ -1,4 +1,6 @@
-function App(config) {
+import { capitalize, sortAsc, sortDesc } from './../../utils/utils.js';
+
+export default function App(config) {
     this.config = config;
     this.sortStates = [];
     this.root = document.getElementById("root");
@@ -333,7 +335,7 @@ App.prototype.validatePopupForm = function() {
     const popupWrap = document.getElementsByClassName("popup-wrap")[0];
     const form = popupWrap.getElementsByClassName("container")[0];
     const formData = this.getFormData(form);
-    validValues = Object.values(formData).filter((value) => value !== '');
+    const validValues = Object.values(formData).filter((value) => value !== '');
     if (validValues.length !== this.columnNames.length) {
         form.getElementsByClassName("btn")[0].disabled = true;
     } else {
