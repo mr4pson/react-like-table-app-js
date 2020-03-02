@@ -40,7 +40,7 @@ App.prototype.getData = async function () {
     // this.data = usersMockData;
 }
 
-App.prototype.renderTable = async function () {
+App.prototype.renderTable = function () {
     if (document.getElementById("data-table")) {
         document.getElementById("data-table").remove();
     }

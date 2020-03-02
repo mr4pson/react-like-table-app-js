@@ -1,18 +1,18 @@
 export function sortAsc(keyName, a, b) {
-  if (a[keyName].toLowerCase() > b[keyName].toLowerCase()) {
+  if (a[keyName].toString().toLowerCase() > b[keyName].toString().toLowerCase()) {
     return 1;
   }
-  if (a[keyName].toLowerCase() < b[keyName].toLowerCase()) {
+  if (a[keyName].toString().toLowerCase() < b[keyName].toString().toLowerCase()) {
     return -1;
   }
   return 0;
 }
 
 export function sortDesc(keyName, a, b) {
-  if (a[keyName].toLowerCase() < b[keyName].toLowerCase()) {
+  if (a[keyName].toString().toLowerCase() < b[keyName].toString().toLowerCase()) {
     return 1;
   }
-  if (a[keyName].toLowerCase() > b[keyName].toLowerCase()) {
+  if (a[keyName].toString().toLowerCase() > b[keyName].toString().toLowerCase()) {
     return -1;
   }
   return 0;
