@@ -1,4 +1,4 @@
-import { capitalize, sortAsc, sortDesc, getFormData } from './../../utils/utils.js';
+import { capitalize, getFormData, sliceData, sortAsc, sortDesc } from './../../utils/utils.js';
 // import { usersMockData } from './../../mocks/users.data.js';
 
 export default function App(config) {
@@ -101,7 +101,8 @@ App.prototype.renderBody = function () {
         this.table.children[1].remove();
     }
     const tbody = document.createElement("tbody");
-    this.slicedData = this.sliceData();
+    this.filterData();
+    this.slicedData = sliceData(this.filteredData, this.config.pageRowLimit);
     const data = this.slicedData[this.page - 1];
     if (data) {
         data.forEach((dataItem) => {
@@ -151,16 +152,6 @@ App.prototype.sortData = function () {
                 break;
         }
     });
-}
-
-App.prototype.sliceData = function () {
-    this.filterData();
-    var i, j, temparray, slicedData = [], chunk = this.config.pageRowLimit;
-    for (i = 0, j = this.filteredData.length; i < j; i += chunk) {
-        temparray = this.filteredData.slice(i, i + chunk);
-        slicedData.push(temparray);
-    }
-    return slicedData;
 }
 
 App.prototype.renderPagination = function () {
@@ -255,15 +246,12 @@ App.prototype.renderDataDetailed = function () {
     province.innerHTML = `State:<b>&ensp;${this.selectedRow.address.state}</b>`;
     const zip = document.createElement("div");
     zip.innerHTML = `Zip:<b>&ensp;${this.selectedRow.address.zip}</b>`;
-
     dataDetailed.append(userSelected);
     dataDetailed.append(description);
     dataDetailed.append(address);
     dataDetailed.append(city);
     dataDetailed.append(province);
     dataDetailed.append(zip);
-
-
     this.root.append(dataDetailed);
 }
 
@@ -300,6 +288,9 @@ App.prototype.renderPopup = function () {
         this.data.push(payload);
         this.renderTable();
         this.renderPagination();
+        if (this.selectedRow) {
+            this.renderDataDetailed();
+        }
         popupWrap.remove();
     });
     const header = document.createElement("h3");

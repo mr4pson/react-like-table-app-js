@@ -30,3 +30,12 @@ export function getFormData(formElement) {
   });
   return payload;
 }
+
+export function sliceData(data, pageRowLimit) {
+  var i, j, temparray, slicedData = [], chunk = pageRowLimit;
+  for (i = 0, j = data.length; i < j; i += chunk) {
+    temparray = data.slice(i, i + chunk);
+    slicedData.push(temparray);
+  }
+  return slicedData;
+}
