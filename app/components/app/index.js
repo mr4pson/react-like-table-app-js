@@ -15,17 +15,20 @@ export default function App(config) {
 }
 
 App.prototype.renderApp = function () {
-    this.RenderFilter();
-    this.renderAddButton();
-    this.renderTable().then(() => {
-        this.renderPagination();
-    });
+    this.getData().then(() => {
+        this.RenderFilter();
+        this.renderAddButton();
+        this.renderTable();
+    })
 }
 
-App.prototype.renderTable = async function () {
+App.prototype.getData = async function () {
     const resonse = await fetch(this.config.url);
     this.data = await resonse.json();
     // this.data = usersMockData;
+}
+
+App.prototype.renderTable = async function () {
     if (this.data.length > 0) {
         this.columnNames = Object.keys(this.data[0]).splice(0, this.config.columnSize);
         this.columnNames.forEach(columnName => {
@@ -44,6 +47,7 @@ App.prototype.renderTable = async function () {
     this.renderBody();
 
     this.root.append(this.table);
+    this.renderPagination();
 }
 
 App.prototype.renderHead = function () {
@@ -327,7 +331,7 @@ App.prototype.renderPopup = function () {
     let closeBtn = document.createElement("div");
     closeBtn.classList.add("close-btn");
     closeBtn.innerHTML = '<i class="fa fa-times" aria-hidden="true"></i>';
-    closeBtn.addEventListener("click", function() {
+    closeBtn.addEventListener("click", function () {
         this.parentNode.parentNode.remove();
     });
     popup.append(closeBtn);
@@ -337,7 +341,7 @@ App.prototype.renderPopup = function () {
     this.validatePopupForm();
 }
 
-App.prototype.validatePopupForm = function() {
+App.prototype.validatePopupForm = function () {
     const popupWrap = document.getElementsByClassName("popup-wrap")[0];
     const form = popupWrap.getElementsByClassName("container")[0];
     const formData = this.getFormData(form);
@@ -349,7 +353,7 @@ App.prototype.validatePopupForm = function() {
     }
 }
 
-App.prototype.getFormData = function(formElement) {
+App.prototype.getFormData = function (formElement) {
     const payload = new Object;
     const inputs = formElement.getElementsByTagName("input");
     Array.prototype.slice.call(inputs).forEach(function (element) {
