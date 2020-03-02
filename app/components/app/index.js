@@ -1,4 +1,4 @@
-import { capitalize, sortAsc, sortDesc } from './../../utils/utils.js';
+import { capitalize, sortAsc, sortDesc, getFormData } from './../../utils/utils.js';
 // import { usersMockData } from './../../mocks/users.data.js';
 
 export default function App(config) {
@@ -289,7 +289,7 @@ App.prototype.renderPopup = function () {
     container.classList.add("container");
     container.addEventListener("submit", (e) => {
         e.preventDefault();
-        const payload = this.getFormData(e.target);
+        const payload = getFormData(e.target);
         payload.address = {
             streetAddress: "",
             city: "",
@@ -348,20 +348,11 @@ App.prototype.renderPopup = function () {
 App.prototype.validatePopupForm = function () {
     const popupWrap = document.getElementsByClassName("popup-wrap")[0];
     const form = popupWrap.getElementsByClassName("container")[0];
-    const formData = this.getFormData(form);
+    const formData = getFormData(form);
     const validValues = Object.values(formData).filter((value) => value !== '');
     if (validValues.length !== this.columnNames.length) {
         form.getElementsByClassName("btn")[0].disabled = true;
     } else {
         form.getElementsByClassName("btn")[0].disabled = false;
     }
-}
-
-App.prototype.getFormData = function (formElement) {
-    const payload = new Object;
-    const inputs = formElement.getElementsByTagName("input");
-    Array.prototype.slice.call(inputs).forEach(function (element) {
-        payload[element.name] = element.value;
-    });
-    return payload;
 }
