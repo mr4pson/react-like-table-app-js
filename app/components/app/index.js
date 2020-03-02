@@ -16,10 +16,22 @@ export default function App(config) {
 
 App.prototype.renderApp = function () {
     this.getData().then(() => {
+        this.getColumnNames();
         this.RenderFilter();
         this.renderAddButton();
         this.renderTable();
     })
+}
+
+App.prototype.getColumnNames = function () {
+    if (this.data.length > 0) {
+        this.columnNames = Object.keys(this.data[0]).splice(0, this.config.columnSize);
+        this.columnNames.forEach(columnName => {
+            this.sortStates.push({
+                state: 0
+            });
+        });
+    }
 }
 
 App.prototype.getData = async function () {
@@ -29,14 +41,6 @@ App.prototype.getData = async function () {
 }
 
 App.prototype.renderTable = async function () {
-    if (this.data.length > 0) {
-        this.columnNames = Object.keys(this.data[0]).splice(0, this.config.columnSize);
-        this.columnNames.forEach(columnName => {
-            this.sortStates.push({
-                state: 0
-            });
-        });
-    }
     if (document.getElementById("data-table")) {
         document.getElementById("data-table").remove();
     }
